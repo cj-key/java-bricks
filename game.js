@@ -11,7 +11,7 @@ var ballRadius = 10; // ball's radius
 
 // Variables to control the paddle's position and size
 var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleWidth = 125;
 var paddleX = (canvas.width - paddleWidth) / 2;
 
 // Variables to track arrow key presses
@@ -19,13 +19,14 @@ var rightPressed = false;
 var leftPressed = false;
 
 // Variables for brick grid
-var brickRowCount = 5;
-var brickColumnCount = 3;
+var brickRowCount = 4;
+var brickColumnCount = 4;
 var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
+var brickSpacing = 10;
 
 // Game state
 var gameStarted = false;
@@ -103,11 +104,14 @@ function drawPaddle() {
 
 // Function to draw the bricks
 function drawBricks() {
+    var totalBrickWidth = (brickColumnCount * (brickWidth + brickSpacing)) - brickSpacing;
+    var leftOffset = (canvas.width - totalBrickWidth) / 2;
+
     for (var c = 0; c < brickColumnCount; c++) {
         for (var r = 0; r < brickRowCount; r++) {
-            if (bricks[c][r].status === 1) {
-                var brickX = (r * (brickWidth + brickPadding)) + brickOffsetLeft;
-                var brickY = (c * (brickHeight + brickPadding)) + brickOffsetTop;
+            if (bricks[c][r].status == 1) {
+                var brickX = (c * (brickWidth + brickSpacing)) + leftOffset;
+                var brickY = (r * (brickHeight + brickSpacing)) + 30;
                 bricks[c][r].x = brickX;
                 bricks[c][r].y = brickY;
                 ctx.beginPath();
@@ -119,6 +123,52 @@ function drawBricks() {
         }
     }
 }
+
+// Add level counter and display
+var level = 1;
+var levelDisplay = document.querySelector("#navbar .level");
+
+// Add a function to update the game parameters according to the level
+function updateLevel() {
+    if (level === 2) {
+        // Update game parameters for level 2
+        canvas.width = 720; // 1.5 times the original width
+        canvas.height = 480; // 1.5 times the original height
+        brickRowCount = 6;
+        brickColumnCount = 6;
+        paddleWidth = 100;
+        brickSpacing = 10 * 1.5;
+    } else if (level === 3) {
+        // Update game parameters for level 3
+        canvas.width = 960; // 2 times the original width
+        canvas.height = 640; // 2 times the original height
+        brickRowCount = 7;
+        brickColumnCount = 7;
+        paddleWidth = 75;
+        brickSpacing = 10 * 2;
+    }
+
+    // Reset game state
+    gameStarted = false;
+    dx = 0;
+    dy = 0;
+    x = canvas.width / 2;
+    y = canvas.height - 30;
+    paddleX = (canvas.width - paddleWidth) / 2;
+
+    // Reset bricks
+    bricks = [];
+    for (var c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for (var r = 0; r < brickRowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0, status: 1, color: colors[Math.floor(Math.random() * colors.length)] };
+        }
+    }
+
+    // Update level display
+    levelDisplay.textContent = "Level: " + level;
+}
+
 
 // Function to handle collision detection
 function collisionDetection() {
@@ -139,15 +189,22 @@ function collisionDetection() {
     }
   
     if (allBricksCleared) {
-        endTime = Date.now(); // Stop the timer
-        elapsedTime = (endTime - startTime) / 1000; // Calculate elapsed time in seconds
-  
-        // Display congratulations message
-        showCongratulations(elapsedTime);
-  
-        clearInterval(interval); // Stop game loop
+        if (level === 3) {
+            // Show congratulations if all levels are cleared
+            endTime = Date.now();
+            elapsedTime = (endTime - startTime) / 1000;
+            showCongratulations(elapsedTime);
+            clearInterval(interval);
+        } else {
+            // Proceed to next level if there are remaining levels
+            level++;
+            updateLevel();
+        }
     }
 }
+
+// Call updateLevel at the beginning to set the initial game parameters
+updateLevel();
 
 
 // Function to update the game at each frame
@@ -213,7 +270,7 @@ function showCongratulations(elapsedTime) {
     popup.className = "popup";
 
     var message = document.createElement("p");
-    message.textContent = "CONGRATS!\nTime: " + elapsedTime.toFixed(2);
+    message.textContent = "YOU WIN\nTime: " + elapsedTime.toFixed(2);
     popup.appendChild(message);
 
     var postScoreButton = document.createElement("button");
