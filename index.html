@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap" />
+    <title>JavaBricks🧱</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+        }
+
+        .popup {
+            margin-top: 100px; /* Adjust the top margin to push the popup below the navbar */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 2px solid black;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 15px;
+            width: 300px;
+            height: 100px;
+            background-color: #00FF00;
+            color: black;
+          }
+
+         
+        .popup button {
+            border-radius: 15px;
+            background-color: black;
+            color: #00FF00;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            margin: 2px;
+        }
+
+        #popupContainer {
+            position: fixed;
+            top: 50px; /* Adjust the top position according to your navbar height */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #navbar {
+            background-color: #00FF00;
+            border-radius: 20px;
+            padding: 10px;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar .title {
+            display: flex;
+            align-items: center;
+        }
+
+        #navbar .title .emoji {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        #navbar .title .java {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: black;
+        }
+
+        #navbar .title .block-breaker {
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            color: black;
+        }
+
+        #navbar .time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: black;
+        }
+
+        #gameContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px); /* Subtracting the navbar height */
+            background-color: black;
+        }
+
+        #gameCanvas {
+            background-color: black;
+            border: 1px solid #00FF00;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <div class="title">
+            <span class="java">Java</span>
+            <span class="block-breaker">Bricks🧱</span>
+        </div>
+        <div class="time">0:00</div>
+    </div>
+    <div id="popupContainer"></div>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="480" height="320"></canvas>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
