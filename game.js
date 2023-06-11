@@ -273,13 +273,6 @@ function showCongratulations(elapsedTime) {
     message.textContent = "YOU WIN\nTime: " + elapsedTime.toFixed(2);
     popup.appendChild(message);
 
-    var postScoreButton = document.createElement("button");
-    postScoreButton.textContent = "Post!";
-    postScoreButton.addEventListener("click", function() {
-        submitScore();
-    });
-    popup.appendChild(postScoreButton);
-
     var restartButton = document.createElement("button");
     restartButton.textContent = "Restart!";
     restartButton.addEventListener("click", function() {
