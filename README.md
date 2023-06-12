@@ -12,7 +12,7 @@ A JS based version of the classic Brick Breaker game.
 8. [Contact](#contact)
 ## Introduction
 JavaScript Bricks is an exciting browser-based game where you use a paddle to bounce a ball and destroy bricks. As you progress through the game, it gets challenging with different levels. The game has a retro arcade theme and is built using JavaScript, HTML, and CSS.
-![JavaScript Bricks Screenshot](screenshot.png)
+
 ## Video Demo
 The following video shows the application in detail:
 
