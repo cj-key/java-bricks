@@ -1,4 +1,4 @@
-# java-bricks
+# JavaScript-Bricks
 A JS based version of the classic Brick Breaker game.
 # JavaScript Bricks🧱 Game - README
 ## Table of Contents
